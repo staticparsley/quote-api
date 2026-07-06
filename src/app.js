@@ -1,4 +1,5 @@
-const express = require("express");
+import express from "express";
+import quoteRoutes from "./routes/quote.js";
 
 const app = express();
 
@@ -12,23 +13,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/health", (req, res) => {
-  res.status(200).json({
+  res.json({
     status: "ok",
   });
 });
 
-app.get("/quote", (req, res) => {
-  const quotes = [
-    "God's in his heaven. All's right with the world.",
-    "Man fears the darkness, and so he scrapes away at the edges of it with fire.",
-    "The right man in the wrong place can make all the difference in the world.",
-    "Wake up, Mr. Freeman. Wake up and smell the ashes.",
-    "War... has changed.",
-  ];
+app.use("/quote", quoteRoutes);
 
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
-
-  res.json({ quote });
-});
-
-module.exports = app;
+export default app;
