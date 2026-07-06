@@ -10,3 +10,7 @@ export function getRandomQuote(req, res) {
 
   return res.json(quote);
 }
+
+export function getAllQuotes(req, res) {
+  res.json(quotes);
+}

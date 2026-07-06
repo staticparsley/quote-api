@@ -1,6 +1,7 @@
 import express from "express";
-import quoteRoutes from "./routes/quote.js";
+import quoteRoutes from "./routes/quoteRoutes.js";
 import { renderHomePage } from "./views/homeView.js";
+import { getHealth, getVersion } from "./controllers/systemController.js";
 
 const app = express();
 
@@ -10,12 +11,9 @@ app.get("/", (req, res) => {
   res.type("html").send(renderHomePage());
 });
 
-app.get("/health", (req, res) => {
-  res.json({
-    status: "ok",
-  });
-});
+app.get("/health", getHealth);
+app.get("/version", getVersion);
 
-app.use("/quote", quoteRoutes);
+app.use(quoteRoutes);
 
 export default app;
