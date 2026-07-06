@@ -1,7 +1,12 @@
 import { quotes } from "../data/quotes.js";
+import { renderQuotePage } from "../views/quoteView.js";
 
 export function getRandomQuote(req, res) {
   const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
-  res.json(quote);
+  if (req.accepts("html")) {
+    return res.type("html").send(renderQuotePage(quote));
+  }
+
+  return res.json(quote);
 }

@@ -1,15 +1,13 @@
 import express from "express";
 import quoteRoutes from "./routes/quote.js";
+import { renderHomePage } from "./views/homeView.js";
 
 const app = express();
 
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.json({
-    name: "NERV Quote API",
-    version: "1.0.0",
-  });
+  res.type("html").send(renderHomePage());
 });
 
 app.get("/health", (req, res) => {
