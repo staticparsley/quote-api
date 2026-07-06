@@ -1,2 +1,2 @@
 # NERV Quote API
-Sample Node.js API demonstrating an end-to-end GitOps deployment pipeline with GitHub Actions, GHCR, Argo CD, and Kubernetes.
+Node.js API that serves quotes for the NERV homelab Message of the Day (MOTD), demonstrating an end-to-end GitOps deployment pipeline with GitHub Actions, GHCR, Argo CD, and Kubernetes.
