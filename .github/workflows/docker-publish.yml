@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*.*.*"
 
 jobs:
   publish:
@@ -30,8 +32,9 @@ jobs:
         with:
           images: ghcr.io/staticparsley/quote-api
           tags: |
-            type=raw,value=latest
+            type=raw,value=latest,enable={{is_default_branch}}
             type=sha,prefix=sha-
+            type=ref,event=tag
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
