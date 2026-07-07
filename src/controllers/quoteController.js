@@ -14,3 +14,8 @@ export function getRandomQuote(req, res) {
 export function getAllQuotes(req, res) {
   res.json(quotes);
 }
+
+export function getJsonQuote (req, res) { 
+     const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  return res.json(quote);
+}
