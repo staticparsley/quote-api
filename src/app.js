@@ -7,7 +7,7 @@ import { getMetrics } from "./metrics/prometheus.js";
 const app = express();
 
 app.use(express.json());
-app.use(getMetrics);
+
 
 app.get("/", (req, res) => {
   res.type("html").send(renderHomePage());
@@ -16,7 +16,6 @@ app.get("/", (req, res) => {
 app.get("/health", getHealth);
 app.get("/version", getVersion);
 app.get("/metrics", getMetrics);
-
 app.use(quoteRoutes);
 
 export default app;

@@ -27,6 +27,13 @@ client.collectDefaultMetrics({ register });
 //   next();
 // }
 
+export const quoteRequestsTotal = new client.Counter({
+  name: "quote_requests_total",
+  help: "Total number of random quote requests served",
+});
+
+register.registerMetric(quoteRequestsTotal);
+
 export async function getMetrics(req, res) {
   res.set("Content-Type", register.contentType);
   res.end(await register.metrics());
