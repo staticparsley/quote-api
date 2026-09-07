@@ -1,6 +1,6 @@
 import { quotes } from "../data/quotes.js";
 import { renderQuotePage } from "../views/quoteView.js";
-import { quoteRequestsTotal } from "../metrics/prometheus.js";
+import { quoteRequestsTotal, quoteCacheRequestsTotal } from "../metrics/prometheus.js";
 import { redisClient } from "../redisClient.js";
 import { withTimeout } from "../withTimeout.js";
 
@@ -16,6 +16,7 @@ export async function getRandomQuote(req, res, next) {
       quote = JSON.parse(cached);
       console.log("Quote cache HIT");
       res.set("X-Cache", "HIT");
+      quoteCacheRequestsTotal.inc({ result: "hit" });
     } else{
       quote = quotes[Math.floor(Math.random() * quotes.length)];
 
@@ -27,6 +28,7 @@ export async function getRandomQuote(req, res, next) {
 
       console.log("Quote cache MISS");
       res.set("X-Cache", "MISS");
+      quoteCacheRequestsTotal.inc({ result: "miss" });
 
     }
 
@@ -44,6 +46,7 @@ export async function getRandomQuote(req, res, next) {
     
     quoteRequestsTotal.inc();
     res.set("X-Cache", "BYPASS");
+    quoteCacheRequestsTotal.inc({ result: "bypass" });
 
     if(req.accepts("html")) {
       return res.type("html").send(renderQuotePage(quote));

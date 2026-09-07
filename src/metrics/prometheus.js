@@ -34,6 +34,18 @@ export const quoteRequestsTotal = new client.Counter({
 
 register.registerMetric(quoteRequestsTotal);
 
+export const quoteCacheRequestsTotal = new client.Counter({
+  name: "quote_cache_requests_total",
+  help: "Total random quote requests by cache outcome",
+  labelNames: ["result"],
+});
+
+register.registerMetric(quoteCacheRequestsTotal);
+
+for (const result of ["hit", "miss", "bypass"]) {
+  quoteCacheRequestsTotal.inc({ result }, 0);
+}
+
 export async function getMetrics(req, res) {
   res.set("Content-Type", register.contentType);
   res.end(await register.metrics());
